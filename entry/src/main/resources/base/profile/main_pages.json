@@ -1,0 +1,8 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/Timer",
+    "pages/Guess",
+    "pages/Game2048"
+  ]
+}
