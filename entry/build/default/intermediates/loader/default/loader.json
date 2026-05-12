@@ -1,0 +1,26 @@
+{
+  "modulePathMap": {
+    "entry": "C:\\Users\\zjy\\DevEcoStudioProjects\\TimerApp\\entry"
+  },
+  "compileMode": "esmodule",
+  "projectRootPath": "C:\\Users\\zjy\\DevEcoStudioProjects\\TimerApp",
+  "nodeModulesPath": "C:\\Users\\zjy\\DevEcoStudioProjects\\TimerApp\\entry\\build\\default\\intermediates\\loader_out\\default\\node_modules",
+  "byteCodeHarInfo": {},
+  "declarationEntry": [],
+  "moduleName": "entry",
+  "hspNameOhmMap": {},
+  "harNameOhmMap": {},
+  "packageManagerType": "ohpm",
+  "compileEntry": [],
+  "otherCompileFiles": [],
+  "dynamicImportLibInfo": {},
+  "routerMap": [],
+  "hspResourcesMap": {},
+  "updateVersionInfo": {},
+  "customizedHar": false,
+  "anBuildOutPut": "C:\\Users\\zjy\\DevEcoStudioProjects\\TimerApp\\entry\\build\\default\\intermediates\\loader_out\\default\\an\\arm64-v8a",
+  "anBuildMode": "type",
+  "patchConfig": {
+    "changedFileList": "C:\\Users\\zjy\\DevEcoStudioProjects\\TimerApp\\entry\\build\\default\\intermediates\\patch\\default\\changedFileList.json"
+  }
+}
