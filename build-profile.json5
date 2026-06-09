@@ -7,11 +7,11 @@
         "material": {
           "certpath": "C:\\Users\\zjy\\.ohos\\config\\default_GameConclude_ZvgvhwbLKM70O0-_lpJ7oE3SzKzDdQSKXWRwF83ZUKc=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B8B250ACBE30273F773B691F9089C1F46C59227EA2406DC8C70792E677A0958C653533A52260E2B",
+          "keyPassword": "0000001BD5DFFC930C154A4B2AF6B491B1BBA1AC6813292161D2699A9DDA06B0456A89B4302ACD9C17F191",
           "profile": "C:\\Users\\zjy\\.ohos\\config\\default_GameConclude_ZvgvhwbLKM70O0-_lpJ7oE3SzKzDdQSKXWRwF83ZUKc=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\zjy\\.ohos\\config\\default_GameConclude_ZvgvhwbLKM70O0-_lpJ7oE3SzKzDdQSKXWRwF83ZUKc=.p12",
-          "storePassword": "0000001B6C00CC83F62EFC8E4F21EEA605D87A44656E39F3D46C085B59CE9A502CE25371B9D2E68998C812"
+          "storePassword": "0000001B098810A26B51D82AB56ED35AEC7D2E987F9A82DD666DE8EEF1B6743A6FB30490BF7E01ABC72C89"
         }
       }
     ],
