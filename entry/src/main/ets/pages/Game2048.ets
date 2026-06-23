@@ -1,9 +1,11 @@
+import { Tile } from '../widget/components/Tile'
 import router from '@ohos.router';
 
 @Entry
 @Component
 struct Game2048 {
-  // 拆分四行单独状态，解决UI不刷新
+  @StorageProp('systemDark') isDark: boolean = false;
+
   @State r0: number[] = [0,0,0,0];
   @State r1: number[] = [0,0,0,0];
   @State r2: number[] = [0,0,0,0];
@@ -11,7 +13,7 @@ struct Game2048 {
 
   @State isWin: boolean = false;
   @State isGameOver: boolean = false;
-  private cellSize: number = 70;
+  private cellSize: number = 72;
 
   aboutToAppear() {
     this.initGame();
@@ -53,7 +55,6 @@ struct Game2048 {
     this.setBoard(b);
   }
 
-  // 单行左移合并工具
   slideRow(arr: number[]): number[] {
     let res: number[] = [];
     for (let n of arr) if (n !== 0) res.push(n);
@@ -69,9 +70,7 @@ struct Game2048 {
 
   moveLeftAll() {
     let b = this.getBoard();
-    for (let i = 0; i < 4; i++) {
-      b[i] = this.slideRow(b[i]);
-    }
+    for (let i = 0; i < 4; i++) b[i] = this.slideRow(b[i]);
     this.setBoard(b);
   }
 
@@ -89,13 +88,9 @@ struct Game2048 {
     let b = this.getBoard();
     for (let col = 0; col < 4; col++) {
       let colArr: number[] = [];
-      for (let row = 0; row < 4; row++) {
-        colArr.push(b[row][col]);
-      }
+      for (let row = 0; row < 4; row++) colArr.push(b[row][col]);
       colArr = this.slideRow(colArr);
-      for (let row = 0; row < 4; row++) {
-        b[row][col] = colArr[row];
-      }
+      for (let row = 0; row < 4; row++) b[row][col] = colArr[row];
     }
     this.setBoard(b);
   }
@@ -104,20 +99,15 @@ struct Game2048 {
     let b = this.getBoard();
     for (let col = 0; col < 4; col++) {
       let colArr: number[] = [];
-      for (let row = 0; row < 4; row++) {
-        colArr.push(b[row][col]);
-      }
+      for (let row = 0; row < 4; row++) colArr.push(b[row][col]);
       colArr = colArr.reverse();
       colArr = this.slideRow(colArr);
       colArr = colArr.reverse();
-      for (let row = 0; row < 4; row++) {
-        b[row][col] = colArr[row];
-      }
+      for (let row = 0; row < 4; row++) b[row][col] = colArr[row];
     }
     this.setBoard(b);
   }
 
-  // 检测胜利
   checkWinAll() {
     let b = this.getBoard();
     for (let i = 0; i < 4; i++) {
@@ -130,140 +120,208 @@ struct Game2048 {
     }
   }
 
-  // 检测游戏失败：无空格 + 上下左右都不能合并
   checkLose(): boolean {
     let b = this.getBoard();
-    // 还有空格，没失败
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
-        if (b[i][j] === 0) return false;
-      }
-    }
-    // 横向能否合并
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 3; j++) {
-        if (b[i][j] === b[i][j+1]) return false;
-      }
-    }
-    // 纵向能否合并
-    for (let j = 0; j < 4; j++) {
-      for (let i = 0; i < 3; i++) {
-        if (b[i][j] === b[i+1][j]) return false;
-      }
-    }
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) if (b[i][j] === 0) return false;
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 3; j++) if (b[i][j] === b[i][j+1]) return false;
+    for (let j = 0; j < 4; j++) for (let i = 0; i < 3; i++) if (b[i][j] === b[i+1][j]) return false;
     return true;
   }
 
   doMove(dir: string) {
-    // 胜利或失败后禁止再操作
     if (this.isWin || this.isGameOver) return;
-
     let oldStr = JSON.stringify(this.getBoard());
-
     if (dir === 'up') this.moveUpAll();
     if (dir === 'down') this.moveDownAll();
     if (dir === 'left') this.moveLeftAll();
     if (dir === 'right') this.moveRightAll();
-
     let newStr = JSON.stringify(this.getBoard());
-    if (oldStr !== newStr) {
-      this.randomNewNum();
-    }
-
-    // 判断胜利
+    if (oldStr !== newStr) this.randomNewNum();
     this.checkWinAll();
-    // 判断失败
-    if (this.checkLose()) {
-      this.isGameOver = true;
-    }
-  }
-
-  getBgColor(num: number): string {
-    let map: Record<number,string> = {
-      2:'#eee4da',4:'#ede0c8',8:'#f2b179',
-      16:'#f59563',32:'#f67c5f',64:'#f65e3b',
-      128:'#edcf72',256:'#edcc61',512:'#edc850',
-      1024:'#edc53f',2048:'#edc22e'
-    };
-    return map[num] || '#cdc1b4';
+    if (this.checkLose()) this.isGameOver = true;
   }
 
   build() {
-    Column() {
-      Button('← 返回首页')
-        .margin({top:10, bottom:10})
-        .onClick(()=>{
-          router.back();
-        })
-
-      Text('2048 游戏')
-        .fontSize(32).fontWeight(FontWeight.Bold).margin({bottom:10})
-
-      // 胜利提示
-      if (this.isWin) {
-        Text('🎉 恭喜！合成2048，游戏胜利')
-          .fontSize(20).fontColor('#00aa00').margin(5)
-      }
-      // 失败提示
-      if (this.isGameOver && !this.isWin) {
-        Text('😥 格子填满无法合并，游戏失败')
-          .fontSize(20).fontColor('#ff3333').margin(5)
-      }
-
+    Scroll() {
       Column() {
-        Row(){
-          ForEach(this.r0,(n:number)=>{
-            Text(n===0?'':n.toString())
-              .width(this.cellSize).height(this.cellSize)
-              .backgroundColor(this.getBgColor(n))
-              .borderRadius(8).fontSize(22)
-              .textAlign(TextAlign.Center).margin(2)
+        // 返回按钮 深青渐变
+        Button('← 返回首页')
+          .width(100)
+          .height(44)
+          .borderRadius(14)
+          .fontSize(16)
+          .fontWeight(FontWeight.Medium)
+          .fontColor("#ffffff")
+          .linearGradient(new LinearGradient([
+            {color: "#18a888", offset:0},
+            {color: "#047d63", offset:1}
+          ]))
+          .shadow({radius: 6, color: 'rgba(0,0,0,0.22)', offsetX: 2, offsetY: 3})
+          .margin({top:10, bottom:16})
+          .onClick(()=>{
+            router.back();
           })
+
+        Text('2048')
+          .fontSize(40)
+          .fontWeight(FontWeight.Bold)
+          .margin({bottom:6})
+          .fontColor(this.isDark ? "#ffffff" : "#2d2d2d")
+        Text('经典数字合成游戏')
+          .fontSize(16)
+          .fontColor(this.isDark ? "#bbbbbb" : "#777777")
+          .margin({bottom:20})
+
+        if (this.isWin) {
+          Text('🎉 恭喜合成2048，游戏通关！')
+            .fontSize(20)
+            .fontColor('#28c740')
+            .margin({bottom:10})
         }
-        Row(){
-          ForEach(this.r1,(n:number)=>{
-            Text(n===0?'':n.toString())
-              .width(this.cellSize).height(this.cellSize)
-              .backgroundColor(this.getBgColor(n))
-              .borderRadius(8).fontSize(22)
-              .textAlign(TextAlign.Center).margin(2)
+        if (this.isGameOver && !this.isWin) {
+          Text('😥 棋盘已满，无法继续合并')
+            .fontSize(20)
+            .fontColor('#f24747')
+            .margin({bottom:10})
+        }
+
+        Column({space:6}) {
+          Row({space:6}){
+            ForEach(this.r0,(n:number)=>{
+              Tile({ num: n })
+                .width(this.cellSize).height(this.cellSize)
+            })
+          }
+          Row({space:6}){
+            ForEach(this.r1,(n:number)=>{
+              Tile({ num: n })
+                .width(this.cellSize).height(this.cellSize)
+            })
+          }
+          Row({space:6}){
+            ForEach(this.r2,(n:number)=>{
+              Tile({ num: n })
+                .width(this.cellSize).height(this.cellSize)
+            })
+          }
+          Row({space:6}){
+            ForEach(this.r3,(n:number)=>{
+              Tile({ num: n })
+                .width(this.cellSize).height(this.cellSize)
+            })
+          }
+        }
+        .backgroundColor("#8C7B6B")
+        .borderRadius(16)
+        .padding(10)
+        .margin({bottom:24})
+
+        Column({space:12}){
+          // 上 深紫蓝
+          Button('↑ 上')
+            .width(100)
+            .height(44)
+            .borderRadius(14)
+            .fontSize(16)
+            .fontWeight(FontWeight.Medium)
+            .fontColor("#ffffff")
+            .linearGradient(new LinearGradient([
+              {color: "#6045d8", offset:0},
+              {color: "#2c1891", offset:1}
+            ]))
+            .shadow({radius: 6, color: 'rgba(0,0,0,0.22)', offsetX: 2, offsetY: 3})
+            .onClick(()=>{
+              this.doMove('up');
+            })
+          Row({space:16}){
+            // 左
+            Button('← 左')
+              .width(100)
+              .height(44)
+              .borderRadius(14)
+              .fontSize(16)
+              .fontWeight(FontWeight.Medium)
+              .fontColor("#ffffff")
+              .linearGradient(new LinearGradient([
+                {color: "#6045d8", offset:0},
+                {color: "#2c1891", offset:1}
+              ]))
+              .shadow({radius: 6, color: 'rgba(0,0,0,0.22)', offsetX: 2, offsetY: 3})
+              .onClick(()=>{
+                this.doMove('left');
+              })
+            // 右
+            Button('→ 右')
+              .width(100)
+              .height(44)
+              .borderRadius(14)
+              .fontSize(16)
+              .fontWeight(FontWeight.Medium)
+              .fontColor("#ffffff")
+              .linearGradient(new LinearGradient([
+                {color: "#6045d8", offset:0},
+                {color: "#2c1891", offset:1}
+              ]))
+              .shadow({radius: 6, color: 'rgba(0,0,0,0.22)', offsetX: 2, offsetY: 3})
+              .onClick(()=>{
+                this.doMove('right');
+              })
+          }
+          // 下
+          Button('↓ 下')
+            .width(100)
+            .height(44)
+            .borderRadius(14)
+            .fontSize(16)
+            .fontWeight(FontWeight.Medium)
+            .fontColor("#ffffff")
+            .linearGradient(new LinearGradient([
+              {color: "#6045d8", offset:0},
+              {color: "#2c1891", offset:1}
+            ]))
+            .shadow({radius: 6, color: 'rgba(0,0,0,0.22)', offsetX: 2, offsetY: 3})
+            .onClick(()=>{
+              this.doMove('down');
+            })
+        }
+
+        // 重新开局 橙红深色渐变
+        Button('🔄 重新开局')
+          .width(100)
+          .height(44)
+          .borderRadius(14)
+          .fontSize(16)
+          .fontWeight(FontWeight.Medium)
+          .fontColor("#ffffff")
+          .linearGradient(new LinearGradient([
+            {color: "#ff5e33", offset:0},
+            {color: "#c42400", offset:1}
+          ]))
+          .shadow({radius: 6, color: 'rgba(0,0,0,0.22)', offsetX: 2, offsetY: 3})
+          .margin({top:24, bottom:40})
+          .onClick(()=>{
+            this.initGame();
           })
-        }
-        Row(){
-          ForEach(this.r2,(n:number)=>{
-            Text(n===0?'':n.toString())
-              .width(this.cellSize).height(this.cellSize)
-              .backgroundColor(this.getBgColor(n))
-              .borderRadius(8).fontSize(22)
-              .textAlign(TextAlign.Center).margin(2)
-          })
-        }
-        Row(){
-          ForEach(this.r3,(n:number)=>{
-            Text(n===0?'':n.toString())
-              .width(this.cellSize).height(this.cellSize)
-              .backgroundColor(this.getBgColor(n))
-              .borderRadius(8).fontSize(22)
-              .textAlign(TextAlign.Center).margin(2)
-          })
-        }
+
       }
-      .backgroundColor('#bbada0')
-      .borderRadius(12).padding(8).margin({top:10})
-
-      Column({space:10}){
-        Button('↑ 上').width(100).onClick(()=>this.doMove('up'))
-        Row({space:20}){
-          Button('← 左').width(100).onClick(()=>this.doMove('left'))
-          Button('→ 右').width(100).onClick(()=>this.doMove('right'))
-        }
-        Button('↓ 下').width(100).onClick(()=>this.doMove('down'))
-      }.margin({top:20})
-
-      Button('重新开始').margin({top:15}).onClick(()=>this.initGame())
-
+      .width('100%')
+      .justifyContent(FlexAlign.Center)
+      .padding(24)
     }
-    .width('100%').height('100%')
-    .justifyContent(FlexAlign.Center)
+    .width('100%')
+    .height('100%')
+    .backgroundColor(this.isDark ? 'rgba(24,24,30,0.9)' : 'rgba(255,255,255,0.92)')
+    .borderRadius(28)
+    .shadow({
+      radius: 22,
+      color: 'rgba(0,0,0,0.15)',
+      offsetX: 0,
+      offsetY: 8
+    })
+    .border({
+      width: 1,
+      color: this.isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)',
+      radius: 28
+    })
   }
 }

@@ -7,11 +7,24 @@
         "material": {
           "certpath": "C:\\Users\\zjy\\.ohos\\config\\default_GameConclude_ZvgvhwbLKM70O0-_lpJ7oE3SzKzDdQSKXWRwF83ZUKc=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BD5DFFC930C154A4B2AF6B491B1BBA1AC6813292161D2699A9DDA06B0456A89B4302ACD9C17F191",
+          "keyPassword": "0000001B63FF1018C1656DD0E3F1F4429DDBF11F5A6C251D248221358C749DCA27A70CB9A4CA707E04ABFC",
           "profile": "C:\\Users\\zjy\\.ohos\\config\\default_GameConclude_ZvgvhwbLKM70O0-_lpJ7oE3SzKzDdQSKXWRwF83ZUKc=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\zjy\\.ohos\\config\\default_GameConclude_ZvgvhwbLKM70O0-_lpJ7oE3SzKzDdQSKXWRwF83ZUKc=.p12",
-          "storePassword": "0000001B098810A26B51D82AB56ED35AEC7D2E987F9A82DD666DE8EEF1B6743A6FB30490BF7E01ABC72C89"
+          "storePassword": "0000001B23DE7324485ABCF1A0E8165CD5C3C78143C398C127255F8A951CA658C7AE768865B6B9C75C1A34"
+        }
+      },
+      {
+        "name": "123456",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\zjy\\.ohos\\config\\123456_GameConclude_ZvgvhwbLKM70O0-_lpJ7oE3SzKzDdQSKXWRwF83ZUKc=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B128933BD9FD9A8D7EFA2B3871C00FDE9A656AC77E12F29A2CCCAF3B6B630D7F0E42DE539D63962",
+          "profile": "C:\\Users\\zjy\\.ohos\\config\\123456_GameConclude_ZvgvhwbLKM70O0-_lpJ7oE3SzKzDdQSKXWRwF83ZUKc=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\zjy\\.ohos\\config\\123456_GameConclude_ZvgvhwbLKM70O0-_lpJ7oE3SzKzDdQSKXWRwF83ZUKc=.p12",
+          "storePassword": "0000001B6FEE11E411E1F26DDB93C1AC5A29D861B41AE6A923AB75B58F2E0DEF442E41710EBC53C4176244"
         }
       }
     ],
