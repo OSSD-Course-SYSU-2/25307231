@@ -2,22 +2,22 @@
 基于鸿蒙ArkTS开发的轻量小游戏合集，内置2048、猜数字、倒计时器三大模块，纯原生鸿蒙代码无第三方依赖，**支持一次开发多端部署+设备自由流转**，完美适配手机、平板、折叠屏设备。
 
 ## 🎮 功能预览
-## 🎮 界面效果预览
-### 首页
+### 界面效果预览
+#### 首页
 <img src="./assets/Homepage_demo.png" width="320"/>
 
-### 2048小游戏
-<img src=“./assets/2048.1_demo.png” width="240"/>
-<img src="./assets/2048.2_demo.png" width="240"/>
-<img src=“./assets/2048.3_demo.png” width="240"/>
+#### 2048小游戏
+<img src="./assets/2048_1_demo.png" width="240"/>
+<img src="./assets/2048_2_demo.png" width="240"/>
+<img src="./assets/2048_3_demo.png" width="240"/>
 
-### 猜数字小游戏
+#### 猜数字小游戏
 <img src="./assets/Guess_demo.png" width="240"/>
-<img src="./assets/Guess.2_demo.png" width="240"/>
+<img src="./assets/Guess_2_demo.png" width="240"/>
 
-### 倒计时器
+#### 倒计时器
 <img src="./assets/Timer_demo.png" width="240"/>
-<img src="./assets/Timer.2_demo.png" width="240"/>
+<img src="./assets/Timer_2_demo.png" width="240"/>
 ## 📦 包含模块
 ### 1. 2048 数字合成游戏
 - 上下左右滑动/虚拟方向键移动方块
